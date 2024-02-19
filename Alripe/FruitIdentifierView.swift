@@ -66,10 +66,15 @@ struct FruitIdentifierView: View {
                             .bold()
                             .font(.title)
                         Picker("Tip Controller", selection: $tipSelected) {
-                            Text("Hello")
-                            Text("Gdbye")
+                            Text("Quicken")
+                            Text("Slow down")
                         }
                         .pickerStyle(.segmented)
+                        if tipSelected == "Quicken" {
+                            Text("Quicken ripening process")
+                        } else if tipSelected == "Slow down" {
+                            Text("Slow down ripening process")
+                        }
                     } else {
                         Button {
                             fruitDetector.detect(uiImage: selectedImage!)

@@ -25,11 +25,14 @@ struct IntroductionView: View {
                         .font(.title)
                         .foregroundStyle(.blue)
                         .padding(5)
+//                    Spacer()
                     VStack(alignment: .leading) {
                         Text("Fruit detection")
                             .bold()
                             .font(.subheadline)
-                        Text("Alripe uses a machine learning model to identify your fruit and its ripeness level.")
+                            .frame(width: .infinity)
+                        Text("Alripe uses a machine learning model to identify your fruit and its ripeness level, and also tells you how many days it takes for your fruit to fully ripen.")
+                            .frame(width: .infinity)
                             
                     }
                 }
@@ -40,6 +43,7 @@ struct IntroductionView: View {
                         .font(.title)
                         .foregroundStyle(.green)
                         .padding(5)
+                    Spacer()
                     VStack(alignment: .leading) {
                         Text("Ripening suggestions")
                             .bold()
@@ -53,6 +57,7 @@ struct IntroductionView: View {
                         .font(.title)
                         .foregroundStyle(.orange)
                         .padding(5)
+                    Spacer()
                     VStack(alignment: .leading) {
                         Text("Recipes")
                             .bold()
@@ -69,7 +74,7 @@ struct IntroductionView: View {
                     .bold()
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)
-                    .padding(.bottom, 40.0)
+                    .padding(.vertical, 40.0)
                 Image("overripe-banana-demo")
                     .resizable()
                     .scaledToFit()
@@ -86,7 +91,7 @@ struct IntroductionView: View {
                     .bold()
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)
-                    .padding(.bottom, 40.0)
+                    .padding(.vertical, 40.0)
                 Text("At present time, Alripe's machine learning model has only been trained on three (3) fruits: Avocado, banana, tomato.")
                 Spacer()
                 Text("Wow what human interface, button hide behind these dots")
