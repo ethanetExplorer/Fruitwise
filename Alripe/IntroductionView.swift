@@ -10,6 +10,7 @@ import SwiftUI
 struct IntroductionView: View {
     
     @Environment(\.dismiss) var dismiss
+    @Binding var showIntroductionView: Bool
     
     var body: some View {
         TabView {
@@ -69,6 +70,15 @@ struct IntroductionView: View {
                     .font(.largeTitle)
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 40.0)
+                Image("overripe-banana-demo")
+                    .resizable()
+                    .scaledToFit()
+                Image("tomato-ripe-demo")
+                    .resizable()
+                    .scaledToFit()
+                Image("unripe-avocado-demo")
+                    .resizable()
+                    .scaledToFit()
             }
             
             VStack {
@@ -78,13 +88,19 @@ struct IntroductionView: View {
                     .multilineTextAlignment(.center)
                     .padding(.bottom, 40.0)
                 Text("At present time, Alripe's machine learning model has only been trained on three (3) fruits: Avocado, banana, tomato.")
+                Spacer()
+                Text("Wow what human interface, button hide behind these dots")
+                Button {
+                    dismiss()
+                } label: {
+                    Text("Continue")
+                        .padding()
+                        .background(.white)
+                        .padding()
+                }
             }
         }
         .tabViewStyle(.page)
         .indexViewStyle(.page(backgroundDisplayMode: .always))
     }
-}
-
-#Preview {
-    IntroductionView()
 }

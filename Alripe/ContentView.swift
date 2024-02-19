@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State var showIntroductionView = true
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            VStack {
+                FruitIdentifierView()
+            }
+            .padding()
         }
-        .padding()
+        .sheet(isPresented: $showIntroductionView) {
+            IntroductionView(showIntroductionView: $showIntroductionView)
+        }
     }
 }
 

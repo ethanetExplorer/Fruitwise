@@ -6,31 +6,129 @@
 //
 
 import SwiftUI
+import UIKit
+import Vision
+import CoreML
 
 struct FruitIdentifierView: View {
+    
+    @State var selectedImage: UIImage? = nil
+    @State var isFinished = false
+    @State var isPresenting = false
+    @State var sourceType: UIImagePickerController.SourceType = .camera
+    @State var tipSelected: String = ""
+    @State private var fruitDetector = DetectionResultProcessor()
+    
+    var titleText: String {
+        let fruitNameText: String
+        let ripenessText: String
+        
+        switch fruitDetector.fruitName {
+        case .avocado:
+            fruitNameText = "avocado"
+        case .banana:
+            fruitNameText = "banana"
+        case .tomato:
+            fruitNameText = "tomato"
+        default:
+            return ""
+        }
+        
+        switch fruitDetector.fruitRipeness {
+        case .halfRipe:
+            ripenessText = "half-ripe"
+        case .overripe:
+            ripenessText = "overripe"
+        case .ripe:
+            ripenessText = "ripe"
+        case .unripe:
+            ripenessText = "unripe"
+        default:
+            return ""
+        }
+        
+        return "Your \(fruitNameText) is \(ripenessText)"
+    }
+    
     var body: some View {
-        NavigationView {
-            VStack {
-                Button("Open Camera") {
-                    showCamera = true
+        NavigationStack {
+            if selectedImage != nil {
+                VStack (alignment: .leading) {
+                    if let selectedImage = selectedImage {
+                        Image(uiImage: selectedImage)
+                            .resizable()
+                            .scaledToFit()
+                            .padding()
+                            .aspectRatio(contentMode: .fit)
+                    }
+                    if isFinished {
+                        Text(titleText)
+                            .bold()
+                            .font(.title)
+                        Picker("Tip Controller", selection: $tipSelected) {
+                            Text("Hello")
+                            Text("Gdbye")
+                        }
+                        .pickerStyle(.segmented)
+                    } else {
+                        Button {
+                            fruitDetector.detect(uiImage: selectedImage!)
+                            isFinished = true
+                        } label: {
+                            Text("Detect")
+                        }
+                    }
+                    Spacer()
+                    Button {
+                        selectedImage = nil
+                        isFinished = false
+                    } label: {
+                        Text("Revert")
+                    }
                 }
-                .padding()
-                .background(.white)
-                .sheet(isPresented: $showCamera) {
-                    ImagePicker(showCamera: $showCamera, uiImage: $investigatablePhoto)
-                }
-                
-                if let photo = investigatablePhoto {
-                    Image(uiImage: photo)
-                        .resizable()
-                        .scaledToFit()
-                        .padding()
+            } else {
+                VStack {
+                    HStack {
+                        Button {
+                            self.sourceType = .camera
+                            isPresenting = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "camera")
+                                Text("Camera")
+                            }
+                            .padding()
+                        }
+                        Button {
+                            self.sourceType = .photoLibrary
+                            isPresenting = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "photo")
+                                Text("Photo library")
+                            }
+                            .padding()
+                        }
+                    }
                 }
             }
+        }
+        .sheet(isPresented: $isPresenting, onDismiss: didDismiss) {
+            ImagePicker(selectedImage: self.$selectedImage, isPresenting: $isPresenting, sourceType: self.$sourceType, isFinished: $isFinished)
+        }
+        .navigationBarTitle("Fruit Detector")
+        
+    }
+    func didDismiss() {
+        if let selectedImage {
+            fruitDetector.detect(uiImage: selectedImage)
+            isFinished = true
         }
     }
 }
 
-#Preview {
-    FruitIdentifierView()
-}
+
+
+//#Preview {
+//    FruitIdentifierView()
+//}

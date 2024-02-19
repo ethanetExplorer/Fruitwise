@@ -7,18 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6632755A2B7131AC00805AAD /* ImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663275592B7131AC00805AAD /* ImagePickerController.swift */; };
+		6632755C2B7C6E3F00805AAD /* FruitIdentificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6632755B2B7C6E3F00805AAD /* FruitIdentificationManager.swift */; };
+		663275602B7C713F00805AAD /* FruitIdentifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 6632755F2B7C713F00805AAD /* FruitIdentifier.mlmodel */; };
 		663401222B6750470061653C /* AlripeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663401212B6750470061653C /* AlripeApp.swift */; };
 		663401242B6750470061653C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663401232B6750470061653C /* ContentView.swift */; };
 		663401262B6750490061653C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663401252B6750490061653C /* Assets.xcassets */; };
 		663401292B6750490061653C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 663401282B6750490061653C /* Preview Assets.xcassets */; };
+		663401362B6753410061653C /* FruitIdentifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663401352B6753410061653C /* FruitIdentifierView.swift */; };
+		665693252B82E378003DEA34 /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665693242B82E378003DEA34 /* IntroductionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		663275592B7131AC00805AAD /* ImagePickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerController.swift; sourceTree = "<group>"; };
+		6632755B2B7C6E3F00805AAD /* FruitIdentificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitIdentificationManager.swift; sourceTree = "<group>"; };
+		6632755F2B7C713F00805AAD /* FruitIdentifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = FruitIdentifier.mlmodel; sourceTree = "<group>"; };
 		6634011E2B6750470061653C /* Alripe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Alripe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		663401212B6750470061653C /* AlripeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlripeApp.swift; sourceTree = "<group>"; };
 		663401232B6750470061653C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		663401252B6750490061653C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		663401282B6750490061653C /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		663401352B6753410061653C /* FruitIdentifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitIdentifierView.swift; sourceTree = "<group>"; };
+		665693242B82E378003DEA34 /* IntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +61,13 @@
 		663401202B6750470061653C /* Alripe */ = {
 			isa = PBXGroup;
 			children = (
+				665693242B82E378003DEA34 /* IntroductionView.swift */,
+				6632755B2B7C6E3F00805AAD /* FruitIdentificationManager.swift */,
+				663275592B7131AC00805AAD /* ImagePickerController.swift */,
 				663401212B6750470061653C /* AlripeApp.swift */,
 				663401232B6750470061653C /* ContentView.swift */,
+				663401352B6753410061653C /* FruitIdentifierView.swift */,
+				6632755F2B7C713F00805AAD /* FruitIdentifier.mlmodel */,
 				663401252B6750490061653C /* Assets.xcassets */,
 				663401272B6750490061653C /* Preview Content */,
 			);
@@ -138,7 +153,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				663401242B6750470061653C /* ContentView.swift in Sources */,
+				663275602B7C713F00805AAD /* FruitIdentifier.mlmodel in Sources */,
+				6632755C2B7C6E3F00805AAD /* FruitIdentificationManager.swift in Sources */,
+				663401362B6753410061653C /* FruitIdentifierView.swift in Sources */,
+				6632755A2B7131AC00805AAD /* ImagePickerController.swift in Sources */,
 				663401222B6750470061653C /* AlripeApp.swift in Sources */,
+				665693252B82E378003DEA34 /* IntroductionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,11 +295,12 @@
 				DEVELOPMENT_TEAM = ZL64HBDS45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Alripe needs to access the camera in order to scan and detect fruits.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,11 +325,12 @@
 				DEVELOPMENT_TEAM = ZL64HBDS45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Alripe needs to access the camera in order to scan and detect fruits.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
