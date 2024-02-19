@@ -66,14 +66,19 @@ struct FruitIdentifierView: View {
                             .bold()
                             .font(.title)
                         Picker("Tip Controller", selection: $tipSelected) {
-                            Text("Quicken")
-                            Text("Slow down")
+                            Text("Quicken").tag("quicken")
+                            Text("Slow down").tag("slow")
+                            if fruitDetector.fruitRipeness == .overripe {
+                                Text("Recipes").tag("recipes")
+                            }
                         }
                         .pickerStyle(.segmented)
-                        if tipSelected == "Quicken" {
+                        if tipSelected == "quicken" {
                             Text("Quicken ripening process")
-                        } else if tipSelected == "Slow down" {
+                        } else if tipSelected == "slow" {
                             Text("Slow down ripening process")
+                        } else if tipSelected == "recipes" {
+                            Text("Recipes")
                         }
                     } else {
                         Button {
