@@ -20,7 +20,7 @@ struct AlripeApp: App {
 }
 
 enum RipenessStates { case unripe, halfRipe, ripe, overripe, none }
-enum FruitNames { case avocado, banana, tomato, none}
+enum FruitNames { case avocado, banana, tomato, none }
 
 struct FruitItem {
     var fruitImage: UIImage?
