@@ -16,7 +16,6 @@
 		663401362B6753410061653C /* FruitIdentifierView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663401352B6753410061653C /* FruitIdentifierView.swift */; };
 		665693252B82E378003DEA34 /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665693242B82E378003DEA34 /* IntroductionView.swift */; };
 		665693272B8446F5003DEA34 /* FruitIdentifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 665693262B8446F5003DEA34 /* FruitIdentifier.mlmodel */; };
-		668882D62B85997D006240C6 /* OldFruitIdentifier.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 668882D52B85997C006240C6 /* OldFruitIdentifier.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,7 +29,6 @@
 		663401352B6753410061653C /* FruitIdentifierView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FruitIdentifierView.swift; sourceTree = "<group>"; };
 		665693242B82E378003DEA34 /* IntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionView.swift; sourceTree = "<group>"; };
 		665693262B8446F5003DEA34 /* FruitIdentifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = FruitIdentifier.mlmodel; path = "../../../../../../../var/folders/0n/12klfc013h507_l9f3s5kmgr0000gn/T/com.apple.dt.CreateML.app/sharing/drag/B7F20351-7459-40CA-A4FF-F53110BDD0EC/FruitIdentifier.mlmodel"; sourceTree = "<group>"; };
-		668882D52B85997C006240C6 /* OldFruitIdentifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = OldFruitIdentifier.mlmodel; path = ../../../../../Downloads/OldFruitIdentifier.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,7 +67,6 @@
 				663401212B6750470061653C /* AlripeApp.swift */,
 				663401232B6750470061653C /* ContentView.swift */,
 				663401352B6753410061653C /* FruitIdentifierView.swift */,
-				668882D52B85997C006240C6 /* OldFruitIdentifier.mlmodel */,
 				665693262B8446F5003DEA34 /* FruitIdentifier.mlmodel */,
 				663401252B6750490061653C /* Assets.xcassets */,
 				663401272B6750490061653C /* Preview Content */,
@@ -161,7 +158,6 @@
 				663401362B6753410061653C /* FruitIdentifierView.swift in Sources */,
 				6632755A2B7131AC00805AAD /* ImagePickerController.swift in Sources */,
 				663401222B6750470061653C /* AlripeApp.swift in Sources */,
-				668882D62B85997D006240C6 /* OldFruitIdentifier.mlmodel in Sources */,
 				665693252B82E378003DEA34 /* IntroductionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
