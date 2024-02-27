@@ -1,176 +1,197 @@
-//
-//  ContentView.swift
-//  Alripe
-//
-//  Created by Ethan Lim on 29/1/24.
-//
-
 import SwiftUI
 import UIKit
-import Vision
-import CoreML
 
 struct ContentView: View {
     
-    @State var selectedImage: UIImage? = nil
-    
-    @State var isFinished = false
-    @State var isPresenting = false
+    //IntroductionView
     @State var showIntroductionView = true
-    @State var sourceType: UIImagePickerController.SourceType = .camera
-    @State var tipSelected: String = "quicken"
     
-    @State private var fruitDetector = DetectionResultProcessor()
-    
-    var titleText: String {
-        let fruitNameText: String
-        let ripenessText: String
-        
-        switch fruitDetector.fruitName {
-        case .avocado:
-            fruitNameText = "avocado"
-        case .banana:
-            fruitNameText = "banana"
-        case .tomato:
-            fruitNameText = "tomato"
-        default:
-            return ""
-        }
-        
-        switch fruitDetector.fruitRipeness {
-        case .halfRipe:
-            ripenessText = "half-ripe"
-        case .overripe:
-            ripenessText = "overripe"
-        case .ripe:
-            ripenessText = "ripe"
-        case .unripe:
-            ripenessText = "unripe"
-        default:
-            return ""
-        }
-        
-        return "Your \(fruitNameText) is \(ripenessText)"
+    //ContentView, General
+    @State var investigatableFruitItem = FruitItem(detectionResult: "", image: nil)
+    @ObservedObject var fruitDetector = DetectionResultProcessor()    
+    @State var fruitsArray: [FruitItem] = []
+    var columns: [GridItem] {
+        return Array(repeating: GridItem(.flexible(), spacing: 12), count: 4)
     }
+    @State var showDeleteAlert = false
+    
+    //ImagePicker
+    @State var selectedImage: UIImage? = nil
+    @State var presentImagePicker = false
+    @State var sourceType: UIImagePickerController.SourceType = .camera
+    
+    //FruitDetailView
+    @State var showFruitDetailView = false
+    
+    //Credits and future work
+    @State var showCreditsView = false
+    @State var showInfoView = false
     
     var body: some View {
         NavigationStack {
-            if selectedImage != nil {
-                VStack {
-                    if let selectedImage = selectedImage {
-                        Image(uiImage: selectedImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(minWidth: 300, maxHeight: 250)
-                            .padding()
-                    }
-                    ScrollView {
-                        if isFinished {
-                            if fruitDetector.fruitRipeness == .none {
-                                Text("This is not a fruit.")
-                                    .font(.title)
-                                    .bold()
-                                    .padding()
-                                    .multilineTextAlignment(.leading)
-                            } else if fruitDetector.fruitRipeness == .ripe {
-                                Text(titleText)
-                                    .font(.title)
-                                    .bold()
-                                    .padding()
-                                Text("Enjoy your fruit!")
-                            } else if fruitDetector.fruitRipeness == .overripe {
-                                Text(titleText)
-                                    .font(.title)
-                                    .bold()
-                                    .padding()
-                                ForEach(fruitDetector.overripeRecipes, id: \.self) { tip in
-                                    Text(tip ?? "Tip unavailable")
-                                        .padding()
-                                }
-                            } else {
-                                Text(titleText)
-                                    .font(.title)
-                                    .bold()
-                                Picker("Tip Controller", selection: $tipSelected) {
-                                    Text("Quicken").tag("quicken")
-                                    Text("Slow down").tag("slow")
-                                }
-                                .pickerStyle(.segmented)
-                                .padding()
-                                if tipSelected == "quicken" {
-                                    ForEach(fruitDetector.ripeningTip, id: \.self) { tip in
-                                        Text(tip ?? "")
-                                            .padding([.bottom, .leading, .trailing])
-                                            .multilineTextAlignment(.leading)
-                                    }
-                                } else if tipSelected == "slow" {
-                                    ForEach(fruitDetector.delayRipeningTip, id: \.self) { tip in
-                                        Text(tip ?? "")
-                                            .padding([.bottom, .leading, .trailing])
-                                            .multilineTextAlignment(.leading)
-                                    }
-                                }
-                            }
-                        } else {
+            if !fruitsArray.isEmpty {
+                ScrollView {
+                    LazyVGrid(columns: columns, spacing: 0) {
+                        ForEach(fruitsArray) { fruit in
                             Button {
-                                fruitDetector.detect(uiImage: selectedImage!)
-                                isFinished = true
+                                self.investigatableFruitItem = fruit
+                                showFruitDetailView = true
                             } label: {
-                                Text("Detect")
+                                VStack(alignment: .leading) {
+                                    Image(uiImage: fruit.image!)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .clipShape(RoundedRectangle(cornerRadius: 12))
+                                    switch fruit.fruitName {
+                                    case .avocado: Text("Avocado")
+                                            .font(.caption)
+                                    case .banana: Text("Banana")
+                                            .font(.caption)
+                                    case .tomato: Text("Tomato")
+                                            .font(.caption)
+                                    default: Text("Unidentified")
+                                            .font(.caption)
+                                    }
+                                }
+                                .padding(12)
                             }
                         }
                     }
-                    Spacer()
-                    Button {
-                        selectedImage = nil
-                        isFinished = false
-                    } label: {
-                        Text("Revert")
-                    }
                 }
-            } else {
-                VStack {
-                    HStack {
+                .navigationTitle("Fruitwise")
+                .toolbar {
+                    Menu {
                         Button {
-                            self.sourceType = .camera
-                            isPresenting = true
+                            sourceType = .camera
+                            presentImagePicker = true
                         } label: {
                             HStack {
                                 Image(systemName: "camera")
                                 Text("Camera")
                             }
                         }
-                        .buttonStyle(.borderedProminent)
                         Button {
-                            self.sourceType = .photoLibrary
-                            isPresenting = true
+                            sourceType = .photoLibrary
+                            presentImagePicker = true
                         } label: {
                             HStack {
-                                Image(systemName: "photo")
-                                Text("Photo library")
+                                Image(systemName: "photo.stack")
+                                Text("Photos library")
                             }
                         }
-                        .buttonStyle(.borderedProminent)
+                    } label: {
+                        Image(systemName: "camera.viewfinder")
+                    }
+                    Menu {
+                        Button {
+                            showIntroductionView = true
+                        } label: {
+                            Text("Show introduction")
+                        }
+                        Button {
+                            showCreditsView = true
+                        } label: {
+                            Text("Credits")
+                        }
+                        Button {
+                            showInfoView = true
+                        } label: {
+                            Text("Information")
+                        }
+                    } label: {
+                        Image(systemName: "info.circle")
+                    }
+                        .alert(isPresented: $showDeleteAlert) {
+                            Alert(title: Text("Delete Everything"), message: Text("Are you sure you want to delete everything?"), primaryButton: .destructive(Text("Delete")) {
+                                fruitsArray.removeAll()
+                            }, secondaryButton: .cancel(Text("Cancel")){
+                                showDeleteAlert = false
+                            })
+                        }
+                    Button(role: .destructive) {
+                        showDeleteAlert = true
+                    } label: {
+                        Image(systemName: "trash")
+                            .foregroundStyle(.red)
                     }
                 }
-                .fullScreenCover(isPresented: $isPresenting, onDismiss: didDismiss) {
-                    ImagePicker(selectedImage: self.$selectedImage, isPresenting: $isPresenting, sourceType: self.$sourceType, isFinished: $isFinished)
-                }
-                .navigationBarTitle("Fruit Detector")
+            } else {
+                Text("Start adding fruits by tapping \(Image(systemName: "camera.viewfinder")) in the top-right corner")
+                    .padding(.horizontal, 36)
+                    .navigationTitle("Fruitwise")
+                    .toolbar {
+                        Menu {
+                            Button {
+                                sourceType = .camera
+                                presentImagePicker = true
+                            } label: {
+                                HStack {
+                                    Image(systemName: "camera")
+                                    Text("Camera")
+                                }
+                            }
+                            Button {
+                                sourceType = .photoLibrary
+                                presentImagePicker = true
+                            } label: {
+                                HStack {
+                                    Image(systemName: "photo.stack")
+                                    Text("Photos library")
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "camera.viewfinder")
+                        }
+                        Menu {
+                            Button {
+                                showIntroductionView = true
+                            } label: {
+                                HStack {
+                                    Image(systemName: "figure.wave")
+                                    Text("Show introduction")
+                                }
+                            }
+                            Button {
+                                showCreditsView = true
+                            } label: {
+                                HStack {
+                                    Image(systemName: "c.circle")
+                                    Text("Credits")
+                                }
+                            }
+                            Button {
+                                showInfoView = true
+                            } label: {
+                                HStack {
+                                    Image(systemName: "calendar")
+                                    Text("Information")
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "info.circle")
+                        }
+                    }
             }
+        }
+        .fullScreenCover(isPresented: $presentImagePicker, onDismiss: didDismiss) {
+            ImagePicker(selectedImage: $selectedImage, presentImagePicker: $presentImagePicker, sourceType: $sourceType)
+        }
+        .sheet(isPresented: $showFruitDetailView) {
+            FruitDetailView(investigatableFruitItem: $investigatableFruitItem, fruitsArray: $fruitsArray)
         }
         .sheet(isPresented: $showIntroductionView) {
             IntroductionView(showIntroductionView: $showIntroductionView)
         }
-    }
-    func didDismiss() {
-        if let selectedImage {
-            fruitDetector.detect(uiImage: selectedImage)
-            isFinished = true
+        .sheet(isPresented: $showCreditsView) {
+            CreditsView(showCreditsView: $showCreditsView)
+        }
+        .sheet(isPresented: $showInfoView) {
+            InformationView(showInfoView: $showInfoView)
         }
     }
-}
-
-#Preview {
-    ContentView()
+    func didDismiss() {
+        fruitDetector.detect(uiImage: selectedImage!)
+        investigatableFruitItem = fruitDetector.newFruitItem!
+        showFruitDetailView = true
+    }
 }
